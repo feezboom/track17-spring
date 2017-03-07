@@ -1,6 +1,10 @@
 package track.lessons.lesson1;
 
-import java.io.File;
+import sun.misc.IOUtils;
+
+import java.io.*;
+import java.nio.file.Files;
+import java.util.Scanner;
 
 /**
  * Задание 1: Реализовать два метода
@@ -31,7 +35,17 @@ public class CountWords {
      * @return - целое число - сумма всех чисел из файла
      */
     public long countNumbers(File file) throws Exception {
-        return 0;
+        Scanner scanner = new Scanner(file);
+        int acc = 0;
+        while (scanner.hasNext()) {
+            String nextLine = scanner.nextLine();
+            try {
+                acc += Integer.parseInt(nextLine);
+            } catch(Exception e) {
+                // Do nothing.
+            }
+        }
+        return acc;
     }
 
 
@@ -43,7 +57,28 @@ public class CountWords {
      * @return - результирующая строка
      */
     public String concatWords(File file) throws Exception {
-        return null;
+        Scanner scanner = new Scanner(file);
+        StringBuilder acc = new StringBuilder();
+        boolean first = true;
+        while (scanner.hasNext()) {
+            String nextLine = scanner.nextLine();
+            if (nextLine.isEmpty())
+                continue;
+
+            try {
+                Integer.parseInt(nextLine);
+                // If successfully parsed - do nothing.
+            } catch (Exception e) {
+                // We found a word if parseInt failed.
+                if (first)
+                    first = false;
+                else
+                    acc.append(" ");
+
+                acc.append(nextLine);
+            }
+        }
+        return acc.toString();
     }
 
 }
