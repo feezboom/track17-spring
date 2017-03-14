@@ -41,9 +41,7 @@ public class CountWords {
             String nextLine = scanner.nextLine();
             try {
                 acc += Integer.parseInt(nextLine);
-            } catch(Exception e) {
-                // Do nothing.
-            }
+            } catch (Exception ignored) { }
         }
         return acc;
     }
@@ -62,18 +60,20 @@ public class CountWords {
         boolean first = true;
         while (scanner.hasNext()) {
             String nextLine = scanner.nextLine();
-            if (nextLine.isEmpty())
+            if (nextLine.isEmpty()) {
                 continue;
+            }
 
             try {
                 Integer.parseInt(nextLine);
                 // If successfully parsed - do nothing.
             } catch (Exception e) {
                 // We found a word if parseInt failed.
-                if (first)
+                if (first) {
                     first = false;
-                else
+                } else {
                     acc.append(" ");
+                }
 
                 acc.append(nextLine);
             }
