@@ -1,14 +1,12 @@
 package track.lessons.lesson3;
 
 import java.util.NoSuchElementException;
-import java.util.Queue;
-import java.util.Stack;
 
 /**
  * Должен наследовать List
  * Односвязный список
  */
-public class MyLinkedList extends List {
+public class MyLinkedList extends List implements Stack, Queue {
 
     /**
      * private - используется для сокрытия этого класса от других.
@@ -35,14 +33,19 @@ public class MyLinkedList extends List {
     }
 
     @Override
-    void add(int item) {
-        Node newHead = new Node(this.headNode, item);
-        this.headNode = newHead;
+    public void add(int item) {
+        Node lastNode = this.getIdxNode(this.currentSize - 1);
+        if (lastNode == null) {
+            this.headNode = new Node(null, item);
+        } else {
+            lastNode.next = new Node(null, item);
+        }
         currentSize++;
     }
 
-    @Override
-    int remove(int idx) throws NoSuchElementException {
+
+
+    public int remove(int idx) throws NoSuchElementException {
         throwExceptionIfNotExists(idx);
         currentSize--;
         if (idx == 0) {
@@ -58,7 +61,7 @@ public class MyLinkedList extends List {
     }
 
     @Override
-    int get(int idx) throws NoSuchElementException {
+    public int get(int idx) throws NoSuchElementException {
         throwExceptionIfNotExists(idx);
         return getIdxNode(idx).val;
     }
@@ -73,8 +76,28 @@ public class MyLinkedList extends List {
         return currentNode;
     }
 
+        /* Stack methods */
+
     @Override
-    int size() {
-        return currentSize;
+    public void push(int value) {
+        this.add(value);
     }
+
+    @Override
+    public int pop() {
+        return this.remove(this.currentSize - 1);
+    }
+
+    /* Queue methods */
+
+    @Override
+    public void enqueue(int value) {
+        this.add(value);
+    }
+
+    @Override
+    public int dequeue() {
+        return this.remove(0);
+    }
+
 }

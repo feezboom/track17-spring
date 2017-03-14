@@ -1,16 +1,13 @@
 package track.lessons.lesson3;
 
 import java.util.NoSuchElementException;
-import track.lessons.lesson3.Stack;
-import track.lessons.lesson3.Queue;
 
+/*
+  Должен наследовать List
 
-/**
- * Должен наследовать List
- *
- * Должен иметь 2 конструктора
- * - без аргументов - создает внутренний массив дефолтного размера на ваш выбор
- * - с аргументом - начальный размер массива
+  Должен иметь 2 конструктора
+  - без аргументов - создает внутренний массив дефолтного размера на ваш выбор
+  - с аргументом - начальный размер массива
  */
 
 /**
@@ -19,7 +16,7 @@ import track.lessons.lesson3.Queue;
  * Для копирования массива следует использовать метод System.arraycopy()
 * */
 
-public class MyArrayList extends List implements Stack, Queue {
+public class MyArrayList extends List {
 
     private int capacity = 1;
     private int[] data;
@@ -37,6 +34,11 @@ public class MyArrayList extends List implements Stack, Queue {
     @Override
     void add(int item) {
         assert this.currentSize >= 0;
+
+        if (capacity == 0) {
+            capacity = 1;
+            this.data = new int[capacity];
+        }
 
         if (this.capacity <= this.currentSize) {
             capacity *= 2;
@@ -72,35 +74,6 @@ public class MyArrayList extends List implements Stack, Queue {
         throwExceptionIfNotExists(idx);
         assert this.currentSize >= 0;
         return this.data[idx];
-    }
-
-    @Override
-    int size() {
-        return currentSize;
-    }
-
-    /* Stack methods */
-
-    @Override
-    public void push(int value) {
-        this.add(value);
-    }
-
-    @Override
-    public int pop() {
-        return this.remove(0);
-    }
-
-    /* Queue methods */
-
-    @Override
-    public void enqueue(int value) {
-        this.add(value);
-    }
-
-    @Override
-    public int dequeue() {
-        return this.remove(currentSize - 1);
     }
 }
 

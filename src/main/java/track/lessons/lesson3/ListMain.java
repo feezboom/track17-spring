@@ -5,7 +5,7 @@ package track.lessons.lesson3;
  */
 public class ListMain {
 
-    public static void printList(List list) {
+    private static void printList(List list) {
         for (int i = 0; i < list.size(); ++i) {
             System.out.print(list.get(i) + " ");
         }
