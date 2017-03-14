@@ -1,6 +1,9 @@
 package track.lessons.lesson3;
 
 import java.util.NoSuchElementException;
+import track.lessons.lesson3.Stack;
+import track.lessons.lesson3.Queue;
+
 
 /**
  * Должен наследовать List
@@ -16,10 +19,9 @@ import java.util.NoSuchElementException;
  * Для копирования массива следует использовать метод System.arraycopy()
 * */
 
-public class MyArrayList extends List {
+public class MyArrayList extends List implements Stack, Queue {
 
     private int capacity = 1;
-    private int currentSize = 0;
     private int[] data;
 
     public MyArrayList() {
@@ -34,35 +36,41 @@ public class MyArrayList extends List {
 
     @Override
     void add(int item) {
-        if (this.capacity > this.currentSize) {
-            data[currentSize] = item;
-        } else {
+        assert this.currentSize >= 0;
+
+        if (this.capacity <= this.currentSize) {
             capacity *= 2;
             int[] newData = new int[capacity];
-            System.arraycopy(data, 0, newData, 0, this.currentSize++);
+            System.arraycopy(data, 0, newData, 0, this.currentSize);
             this.data = newData;
         }
+
+        this.data[currentSize] = item;
+        this.currentSize = this.currentSize + 1;
     }
 
     @Override
     int remove(int idx) throws NoSuchElementException {
         throwExceptionIfNotExists(idx);
 
-        int oldValue = this.data[idx];
+        @SuppressWarnings("CheckStyle") int oldValue = this.data[idx];
 
         System.arraycopy(data, idx + 1, data, idx, (this.currentSize--) - idx - 1);
+
         if (this.capacity > currentSize * 4) {
-            int[] newData = new int[currentSize * 2];
+            int[] newData = new int[capacity / 2];
             this.capacity = capacity / 2;
             System.arraycopy(this.data, 0, newData, 0, this.currentSize);
             this.data = newData;
         }
+
         return oldValue;
     }
 
     @Override
     int get(int idx) throws NoSuchElementException {
         throwExceptionIfNotExists(idx);
+        assert this.currentSize >= 0;
         return this.data[idx];
     }
 
@@ -71,10 +79,28 @@ public class MyArrayList extends List {
         return currentSize;
     }
 
-    private void throwExceptionIfNotExists(int idx) throws NoSuchElementException {
-        if (idx >= this.currentSize || idx < 0) {
-            throw new NoSuchElementException();
-        }
+    /* Stack methods */
+
+    @Override
+    public void push(int value) {
+        this.add(value);
+    }
+
+    @Override
+    public int pop() {
+        return this.remove(0);
+    }
+
+    /* Queue methods */
+
+    @Override
+    public void enqueue(int value) {
+        this.add(value);
+    }
+
+    @Override
+    public int dequeue() {
+        return this.remove(currentSize - 1);
     }
 }
 

@@ -11,6 +11,8 @@ import java.util.NoSuchElementException;
  */
 public abstract class List {
 
+    protected int currentSize = 0;
+
     /**
      * Добавить элемент в конец списка
      */
@@ -35,7 +37,15 @@ public abstract class List {
     /**
      * Кол-во элементов списка
      */
-    abstract int size();
+    int size() {
+        return this.currentSize;
+    }
+
+    protected void throwExceptionIfNotExists(int idx) throws NoSuchElementException {
+        if (idx >= this.currentSize || idx < 0) {
+            throw new NoSuchElementException();
+        }
+    }
 
 
 }
