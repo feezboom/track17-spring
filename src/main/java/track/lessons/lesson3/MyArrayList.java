@@ -22,48 +22,45 @@ public class MyArrayList extends List {
     private int[] data;
 
     public MyArrayList() {
-        this.data = new int[this.capacity];
+        data = new int[capacity];
     }
 
     public MyArrayList(int capacity) {
         this.capacity = capacity;
-        this.currentSize = 0;
-        this.data = new int[this.capacity];
+        data = new int[capacity];
     }
 
     @Override
     void add(int item) {
-        assert this.currentSize >= 0;
-
         if (capacity == 0) {
             capacity = 1;
-            this.data = new int[capacity];
+            data = new int[capacity];
         }
 
-        if (this.capacity <= this.currentSize) {
+        if (capacity <= currentSize) {
             capacity *= 2;
             int[] newData = new int[capacity];
-            System.arraycopy(data, 0, newData, 0, this.currentSize);
-            this.data = newData;
+            System.arraycopy(data, 0, newData, 0, currentSize);
+            data = newData;
         }
 
-        this.data[currentSize] = item;
-        this.currentSize = this.currentSize + 1;
+        data[currentSize] = item;
+        currentSize++;
     }
 
     @Override
     int remove(int idx) throws NoSuchElementException {
         throwExceptionIfNotExists(idx);
 
-        @SuppressWarnings("CheckStyle") int oldValue = this.data[idx];
+        @SuppressWarnings("CheckStyle") int oldValue = data[idx];
 
-        System.arraycopy(data, idx + 1, data, idx, (this.currentSize--) - idx - 1);
+        System.arraycopy(data, idx + 1, data, idx, (currentSize--) - idx - 1);
 
-        if (this.capacity > currentSize * 4) {
+        if (capacity > currentSize * 4) {
             int[] newData = new int[capacity / 2];
-            this.capacity = capacity / 2;
-            System.arraycopy(this.data, 0, newData, 0, this.currentSize);
-            this.data = newData;
+            capacity = capacity / 2;
+            System.arraycopy(data, 0, newData, 0, currentSize);
+            data = newData;
         }
 
         return oldValue;
@@ -72,8 +69,7 @@ public class MyArrayList extends List {
     @Override
     int get(int idx) throws NoSuchElementException {
         throwExceptionIfNotExists(idx);
-        assert this.currentSize >= 0;
-        return this.data[idx];
+        return data[idx];
     }
 }
 

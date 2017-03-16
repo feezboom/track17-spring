@@ -27,16 +27,13 @@ public class MyLinkedList extends List implements Stack, Queue {
         }
     }
 
-    public MyLinkedList() {
-        this.headNode = null;
-        this.currentSize = 0;
-    }
+    public MyLinkedList() { }
 
     @Override
     public void add(int item) {
-        Node lastNode = this.getIdxNode(this.currentSize - 1);
+        Node lastNode = getIdxNode(currentSize - 1);
         if (lastNode == null) {
-            this.headNode = new Node(null, item);
+            headNode = new Node(null, item);
         } else {
             lastNode.next = new Node(null, item);
         }
@@ -49,8 +46,8 @@ public class MyLinkedList extends List implements Stack, Queue {
         throwExceptionIfNotExists(idx);
         currentSize--;
         if (idx == 0) {
-            int oldValue = this.headNode.val;
-            this.headNode = null;
+            int oldValue = headNode.val;
+            headNode = null;
             return oldValue;
         } else {
             Node prev = getIdxNode(idx - 1);
@@ -68,9 +65,8 @@ public class MyLinkedList extends List implements Stack, Queue {
 
     private Node getIdxNode(int idx) {
         int currentIndex = 0;
-        Node currentNode = this.headNode;
+        Node currentNode = headNode;
         while (currentIndex++ < idx) {
-            assert currentNode.next != null;
             currentNode = currentNode.next;
         }
         return currentNode;
@@ -80,24 +76,24 @@ public class MyLinkedList extends List implements Stack, Queue {
 
     @Override
     public void push(int value) {
-        this.add(value);
+        add(value);
     }
 
     @Override
     public int pop() {
-        return this.remove(this.currentSize - 1);
+        return remove(currentSize - 1);
     }
 
     /* Queue methods */
 
     @Override
     public void enqueue(int value) {
-        this.add(value);
+        add(value);
     }
 
     @Override
     public int dequeue() {
-        return this.remove(0);
+        return remove(0);
     }
 
 }

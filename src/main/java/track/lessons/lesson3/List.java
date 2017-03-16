@@ -38,11 +38,11 @@ public abstract class List {
      * Кол-во элементов списка
      */
     int size() {
-        return this.currentSize;
+        return currentSize;
     }
 
     protected void throwExceptionIfNotExists(int idx) throws NoSuchElementException {
-        if (idx >= this.currentSize || idx < 0) {
+        if (idx >= currentSize || idx < 0) {
             throw new NoSuchElementException();
         }
     }
