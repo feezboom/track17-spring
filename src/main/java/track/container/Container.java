@@ -36,7 +36,6 @@ public class Container {
     public Object getById(String id) throws Exception {
         for (Bean bean : beans) {
             String currentId = bean.getId();
-
             if (currentId.equals(id)) {
 
                 Object neededObject = objById.get(currentId);
@@ -107,19 +106,19 @@ public class Container {
 
             Object realFieldValue = getById(value);
             setter = clazz.getMethod("set" + classFieldName, realFieldValue.getClass());
-            instance = setter.invoke(instance, realFieldValue);
+            setter.invoke(instance, realFieldValue);
 
         } else { // if (propertyFieldType == ValueType.VAL) {
 
             if (getTypeOf(value).equals("int")) {
 
                 setter = clazz.getMethod("set" + classFieldName, int.class);
-                instance = setter.invoke(instance, Integer.parseInt(value));
+                setter.invoke(instance, Integer.parseInt(value));
 
             } else { // if (getTypeOf(classFieldName).equals("float")) {
 
                 setter = clazz.getMethod("set" + classFieldName, float.class);
-                instance = setter.invoke(instance, Float.parseFloat(value));
+                setter.invoke(instance, Float.parseFloat(value));
 
             }
         }
@@ -134,7 +133,12 @@ public class Container {
             try {
                 Float.parseFloat(value);
             } catch (NumberFormatException ex1) {
-                throw new Exception("Given value is not primitive type.");
+                try {
+                    Boolean.parseBoolean(value);
+                } catch (NumberFormatException ex2) {
+                    throw new Exception("Given value is not primitive type.");
+                }
+                return "boolean";
             }
             return "float";
         }
