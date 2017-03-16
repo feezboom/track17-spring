@@ -6,8 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.sun.xml.internal.ws.util.StringUtils;
-import sun.misc.FloatingDecimal;
+import org.apache.commons.lang3.StringUtils;
 import track.container.config.Bean;
 import track.container.config.Property;
 import track.container.config.ValueType;
