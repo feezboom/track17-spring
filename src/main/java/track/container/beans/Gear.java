@@ -8,8 +8,7 @@ import java.util.Objects;
 public class Gear {
     private int count;
 
-    public Gear() {
-    }
+    public Gear() { }
 
     public int getCount() {
         return count;

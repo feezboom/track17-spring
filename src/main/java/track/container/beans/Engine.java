@@ -8,8 +8,7 @@ import java.util.Objects;
 public class Engine {
     private int power;
 
-    public Engine() {
-    }
+    public Engine() { }
 
     public int getPower() {
         return power;

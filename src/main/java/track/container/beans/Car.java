@@ -10,8 +10,7 @@ public class Car {
     private Gear gear;
     private Engine engine;
 
-    public Car() {
-    }
+    public Car() { }
 
     public Gear getGear() {
         return gear;
