@@ -36,7 +36,7 @@ public class CountWords {
      */
     public long countNumbers(File file) throws Exception {
         Scanner scanner = new Scanner(file);
-        int acc = 0;
+        long acc = 0;
         while (scanner.hasNext()) {
             String nextLine = scanner.nextLine();
             try {
